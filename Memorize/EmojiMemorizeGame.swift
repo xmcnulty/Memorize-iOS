@@ -18,7 +18,7 @@ final class EmojiMemorizeGame: ObservableObject {
     /// The memory game model that contains the game logic.
     ///
     /// Initialized with 6 pairs of emoji cards.
-    @Published private var model = MemorizeGame<String>(numPairOfCards: 6) { index in
+    @Published private var model = MemorizeGame<String>(numPairOfCards: 8) { index in
         emojis[index]
     }
     
