@@ -7,8 +7,13 @@
 
 import Foundation
 
-struct MemorizeGame<CardContent> {
+struct MemorizeGame<CardContent> where CardContent: Equatable {
     private(set) var cards: [Card]
+    
+    private var indexFirstChosenCard: Int? {
+        get { cards.indices.filter { cards[$0].isFaceUp }.only }
+        set { cards.indices.forEach { cards[$0].isFaceUp = (newValue == $0) } }
+    }
     
     init(numPairOfCards: Int, cardContentFactory: (Int) -> CardContent) {
         cards = []
@@ -21,17 +26,43 @@ struct MemorizeGame<CardContent> {
         }
     }
     
-    func choose(card: Card) {
-        
+    mutating func choose(_ card: Card) {
+        if let chosenIndex = cards.firstIndex(where: { card.id == $0.id }) {
+            if !cards[chosenIndex].isFaceUp  && !cards[chosenIndex].isMatched {
+                
+                if let potentialMatchIndex = indexFirstChosenCard {
+                    if cards[potentialMatchIndex].content == cards[chosenIndex].content {
+                        cards[potentialMatchIndex].isMatched = true
+                        cards[chosenIndex].isMatched = true
+                    }
+                } else {
+                    indexFirstChosenCard = chosenIndex
+                }
+                
+                cards[chosenIndex].isFaceUp = true
+            }
+        }
     }
     
     mutating func shuffle() {
         cards.shuffle()
     }
     
-    struct Card{
-        var isFaceUp = true
+    struct Card: Equatable, Identifiable, CustomDebugStringConvertible {
+        var isFaceUp = false
         var isMatched = false
         let content: CardContent
+        
+        let id = UUID()
+        
+        var debugDescription: String {
+            "\(id): \(content) \(isFaceUp ? "UP" : "DOWN")"
+        }
+    }
+}
+
+extension Array {
+    var only: Element? {
+        count == 1 ? first : nil
     }
 }

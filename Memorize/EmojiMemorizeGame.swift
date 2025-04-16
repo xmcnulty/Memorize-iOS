@@ -24,6 +24,6 @@ final class EmojiMemorizeGame: ObservableObject {
     }
     
     func choose(_ card: MemorizeGame<String>.Card) {
-        model.choose(card: card)
+        model.choose(card)
     }
 }

@@ -30,8 +30,7 @@ struct CardView: View {
             
             base.fill().opacity(card.isFaceUp ? 0 : 1)
         }
-        .onTapGesture {
-            print("Card selected")
-        }
+        .disabled(card.isMatched)
+        .opacity(card.isFaceUp || !card.isMatched ? 1 : 0)
     }
 }
