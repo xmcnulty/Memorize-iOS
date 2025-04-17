@@ -6,30 +6,35 @@
 //
 
 import XCTest
+@testable import Memorize
 
 final class EmojiMemorizeGameTests: XCTestCase {
+    
+    var emojiGame: EmojiMemorizeGame!
 
     override func setUpWithError() throws {
         // Put setup code here. This method is called before the invocation of each test method in the class.
+        emojiGame = EmojiMemorizeGame()
+        
+        super.setUp()
     }
 
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    func testChosenCardFlipsUp() {
+        let chosenCard = emojiGame.cards[0]
+        
+        XCTAssertFalse(emojiGame.cards[0].isFaceUp)
+        
+        emojiGame.choose(chosenCard)
+        
+        XCTAssertTrue(emojiGame.cards[0].isFaceUp)
     }
+    
+    func testShuffleChangesOrder() {
+        let beforeShuffleOrder = emojiGame.cards.map { $0.id }
+        emojiGame.shuffle()
+        let afterShuffleOrder = emojiGame.cards.map { $0.id }
+        
+        XCTAssertNotEqual(beforeShuffleOrder, afterShuffleOrder)
 
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }

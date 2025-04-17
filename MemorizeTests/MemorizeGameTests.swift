@@ -128,7 +128,7 @@ final class MemorizeGameTests: XCTestCase {
     }
     
     func testChoosingAlreadyFaceUpCardDoesNothing() {
-        var game = try MemorizeGame<String>(numPairOfCards: 2) { "🍎\($0)" }
+        var game = MemorizeGame<String>(numPairOfCards: 2) { "🍎\($0)" }
         
         let firstIndex = game.cards.firstIndex { $0.content == "🍎0" }!
         
