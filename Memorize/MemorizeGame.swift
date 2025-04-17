@@ -33,8 +33,8 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
         // Ensure at least 2 pairs exist.
         for pairIndex in 0..<numPairOfCards {
             let content = cardContentFactory(pairIndex)
-            cards.append(Card(content: content))
-            cards.append(Card(content: content))
+            cards.append(Card(content: content, id: "\(content)-0"))
+            cards.append(Card(content: content, id: "\(content)-1)"))
         }
     }
     
@@ -79,7 +79,7 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
         let content: CardContent
         
         /// Unique identifier for the card.
-        let id = UUID()
+        let id: String
         
         /// Debug-friendly string representing the card's state.
         var debugDescription: String {

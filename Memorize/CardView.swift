@@ -13,6 +13,9 @@ import SwiftUI
 /// The card is hidden when matched.
 struct CardView: View {
     
+    static let faceUpLabel = "Face Up"
+    static let faceDownLabel = "Face Down"
+    
     /// The card data model to be rendered.
     let card: MemorizeGame<String>.Card
     
@@ -41,6 +44,9 @@ struct CardView: View {
             // Face-down view
             base.fill().opacity(card.isFaceUp ? 0 : 1)
         }
+        .accessibilityElement()
+        .accessibilityIdentifier("card-\(card.id)")
+        .accessibilityLabel(card.isFaceUp ? CardView.faceUpLabel : CardView.faceDownLabel)
         .disabled(card.isMatched) // Disable interaction if card is matched
         .opacity(card.isFaceUp || !card.isMatched ? 1 : 0) // Hide matched cards
     }
