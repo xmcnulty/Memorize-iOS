@@ -25,11 +25,13 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
     /// - Parameters:
     ///   - numPairOfCards: The number of pairs of cards to create (minimum of 2 pairs).
     ///   - cardContentFactory: A closure that provides the content for each card pair based on its index.
+    /// - Precondition: `numPairOfCards >= 2`. The game requires at least two pairs to function properly.
     init(numPairOfCards: Int, cardContentFactory: (Int) -> CardContent) {
+        precondition(numPairOfCards >= 2, "Game requires at least two pairs of cards.")
         cards = []
         
         // Ensure at least 2 pairs exist.
-        for pairIndex in 0..<max(2, numPairOfCards) {
+        for pairIndex in 0..<numPairOfCards {
             let content = cardContentFactory(pairIndex)
             cards.append(Card(content: content))
             cards.append(Card(content: content))
