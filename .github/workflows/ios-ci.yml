@@ -50,3 +50,5 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: xmcnulty/Memorize-iOS
+      - name: GitHub Action for SwiftLint
+        uses: norio-nomura/action-swiftlint@3.2.1
