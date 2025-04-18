@@ -29,6 +29,16 @@
 		253D1DAE2DAEEB8A007AFDEF /* MemorizeUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MemorizeUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		2573787B2DB2B98D0016372C /* Exceptions for "MemorizeTests" folder in "MemorizeTests" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				MemorizeTestPlan.xctestplan,
+			);
+			target = 253D1DA32DAEEB8A007AFDEF /* MemorizeTests */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
+
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		253D1D992DAEEB88007AFDEF /* Memorize */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -37,6 +47,9 @@
 		};
 		253D1DA72DAEEB8A007AFDEF /* MemorizeTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				2573787B2DB2B98D0016372C /* Exceptions for "MemorizeTests" folder in "MemorizeTests" target */,
+			);
 			path = MemorizeTests;
 			sourceTree = "<group>";
 		};

@@ -1,0 +1,37 @@
+{
+  "configurations" : [
+    {
+      "id" : "D073ABB0-E6CD-47EF-906A-D8CE72A9887A",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:Memorize.xcodeproj",
+      "identifier" : "253D1D962DAEEB88007AFDEF",
+      "name" : "Memorize"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Memorize.xcodeproj",
+        "identifier" : "253D1DA32DAEEB8A007AFDEF",
+        "name" : "MemorizeTests"
+      }
+    },
+    {
+      "parallelizable" : true,
+      "target" : {
+        "containerPath" : "container:Memorize.xcodeproj",
+        "identifier" : "253D1DAD2DAEEB8A007AFDEF",
+        "name" : "MemorizeUITests"
+      }
+    }
+  ],
+  "version" : 1
+}
