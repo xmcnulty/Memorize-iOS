@@ -30,7 +30,7 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <TestPlans>
          <TestPlanReference
-            reference = "container:MemorizeTestPlan.xctestplan"
+            reference = "container:MemorizeTests/MemorizeTestPlan.xctestplan"
             default = "YES">
          </TestPlanReference>
       </TestPlans>
