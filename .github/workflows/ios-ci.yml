@@ -29,7 +29,7 @@ jobs:
       - name: Build and Test
         env:
           platform: ${{ 'iOS Simulator' }}
-        run: xcodebuild test -project Memorize.xcodeproj -scheme Memorize -destination "platform=$platform,name=iPhone 16" -enableCodeCoverage YES
+        run: xcodebuild test -project Memorize.xcodeproj -scheme Memorize -destination "platform=$platform,name=iPhone 16" -enableCodeCoverage YES test build
   
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
