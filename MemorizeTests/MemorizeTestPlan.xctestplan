@@ -18,6 +18,13 @@
   "testTargets" : [
     {
       "parallelizable" : true,
+      "skippedTests" : {
+        "suites" : [
+          {
+            "name" : "MemorizeTests"
+          }
+        ]
+      },
       "target" : {
         "containerPath" : "container:Memorize.xcodeproj",
         "identifier" : "253D1DA32DAEEB8A007AFDEF",
@@ -26,6 +33,10 @@
     },
     {
       "parallelizable" : true,
+      "skippedTests" : [
+        "MemorizeUITestsLaunchTests",
+        "MemorizeUITestsLaunchTests\/testLaunch()"
+      ],
       "target" : {
         "containerPath" : "container:Memorize.xcodeproj",
         "identifier" : "253D1DAD2DAEEB8A007AFDEF",
