@@ -64,5 +64,4 @@ final class MemorizeUITests: XCTestCase {
         // Assert third card is face up
         XCTAssertEqual(card3.label, "Face Up", "Third card should be face up")
     }
-
 }
