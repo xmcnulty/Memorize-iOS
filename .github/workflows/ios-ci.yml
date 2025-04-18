@@ -18,21 +18,20 @@ jobs:
           
       - name: Checkout
         uses: actions/checkout@v4
-        
-      - name: Set Default Scheme
-        run: |
-          scheme_list=$(xcodebuild -list -json | tr -d "\n")
-          default=$(echo $scheme_list | ruby -e "require 'json'; puts JSON.parse(STDIN.gets)['project']['targets'][0]")
-          echo $default | cat >default
-          echo Using default scheme: $default
           
       - name: Build and Test
         env:
           platform: ${{ 'iOS Simulator' }}
-        run: xcodebuild test -project Memorize.xcodeproj -scheme Memorize -destination "platform=$platform,name=iPhone 16" -enableCodeCoverage YES test build
+        run: xcodebuild test -project Memorize.xcodeproj -scheme Memorize -destination "platform=$platform,name=iPhone 16" -enableCodeCoverage YES -resultBundlePath artifacts/ResultBundle.xcresult
+
+      - name: Convert xcresult to cobertura
+        run: xcresultparser --output-format cobertura "artifacts/ResultBundle.xcresult" > "artifacts/coverage.xml"
   
       - name: Upload coverage reports to Codecov
         uses: codecov/codecov-action@v5
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: xmcnulty/Memorize-iOS
+          disable_search: true
+          files: artifacts/coverage.xml
+          verbose: true
