@@ -32,7 +32,7 @@ jobs:
           platform: iOS Simulator
         run: |
           # Build for testing with code coverage enabled
-          xcodebuild build-for-testing -scheme "$scheme" -project "Memorize.xcodeproj" -destination "platform=iOS Simulator,name=Any iOS Simulator Device" ENABLE_CODE_COVERAGE=YES
+          xcodebuild build-for-testing -scheme "$scheme" -project "Memorize.xcodeproj" -destination "platform=iOS Simulator,name=iphonesimulator18.4" ENABLE_CODE_COVERAGE=YES
 
 
       - name: Test with Coverage Report
