@@ -29,8 +29,7 @@ jobs:
       - name: Build and Test
         env:
           platform: ${{ 'iOS Simulator' }}
-        run: xcodebuild test -project Memorize.xcodeproj -scheme Memorize -destination "platform=$platform,name=iPhone 16" -enableCodeCoverage YES -derivedDataPath build
-
+        run: xcodebuild test -project Memorize.xcodeproj -scheme Memorize -destination "platform=$platform,name=iPhone 16" -enableCodeCoverage YES
       - name: Generate Reports
         run: xcrun xccov view --report build/Logs/Test/*.xcresult
   
@@ -39,4 +38,3 @@ jobs:
         with:
           token: ${{ secrets.CODECOV_TOKEN }}
           slug: xmcnulty/Memorize-iOS
-          directory: build/Logs/Test/*.xcresult
