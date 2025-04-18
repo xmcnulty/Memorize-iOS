@@ -28,15 +28,12 @@ jobs:
 
       - name: Build with Code Coverage
         env:
-          scheme: Memorize  # Directly specify the scheme here
+          scheme: Memorize
           platform: iOS Simulator
         run: |
-          # Set up device name and build configuration
-          device="iPhone 14"  # Use a common simulator like iPhone 14
-          file_to_build="Memorize.xcodeproj"  # Specify your project or workspace file name here
-          
           # Build for testing with code coverage enabled
-          xcodebuild build-for-testing -scheme "$scheme" -project "$file_to_build" -destination "platform=$platform,name=$device" ENABLE_CODE_COVERAGE=YES
+          xcodebuild build-for-testing -scheme "$scheme" -project "Memorize.xcodeproj" -destination "platform=iOS Simulator,name=Any iOS Simulator Device" ENABLE_CODE_COVERAGE=YES
+
 
       - name: Test with Coverage Report
         env:
