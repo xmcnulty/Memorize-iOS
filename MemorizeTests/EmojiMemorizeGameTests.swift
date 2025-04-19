@@ -123,4 +123,30 @@ final class EmojiMemorizeGameTests: XCTestCase {
 
         XCTAssertLessThan(adjacentPairCount, totalPairs, "Too many adjacent pairs — deck may not be shuffled.")
     }
+    
+    func testChangingThemesResetsScore() {
+        let matchingCards = emojiGame.cards.filter { $0.content == emojiGame.cards[0].content }
+        
+        emojiGame.choose(matchingCards[0])
+        emojiGame.choose(matchingCards[1])
+        
+        XCTAssertEqual(emojiGame.score, 2)
+        
+        emojiGame.changeTheme(to: .sports)
+        
+        XCTAssertEqual(emojiGame.score, 0)
+    }
+    
+    func testSelectingCurrentThemeDoesNotResetScore() {
+        let matchingCards = emojiGame.cards.filter { $0.content == emojiGame.cards[0].content }
+        
+        emojiGame.choose(matchingCards[0])
+        emojiGame.choose(matchingCards[1])
+        
+        XCTAssertEqual(emojiGame.score, 2)
+        
+        emojiGame.changeTheme(to: .halloween)
+        
+        XCTAssertEqual(emojiGame.score, 2)
+    }
 }

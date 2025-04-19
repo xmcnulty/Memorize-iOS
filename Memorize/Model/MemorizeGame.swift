@@ -55,6 +55,9 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
                     if cards[potentialMatchIndex].content == cards[chosenIndex].content {
                         cards[potentialMatchIndex].isMatched = true
                         cards[chosenIndex].isMatched = true
+                        score += 2
+                    } else {
+                        score = max(0, score - 1)
                     }
                 } else {
                     indexFirstChosenCard = chosenIndex
