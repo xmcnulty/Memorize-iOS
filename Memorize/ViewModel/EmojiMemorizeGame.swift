@@ -27,6 +27,10 @@ final class EmojiMemorizeGame: ObservableObject {
         theme.color
     }
     
+    var score: Int {
+        model.score
+    }
+    
     init(theme: Theme = .halloween) {
         self.theme = theme
         

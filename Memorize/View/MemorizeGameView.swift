@@ -23,6 +23,8 @@ struct MemorizeGameView: View {
                 .animation(.default, value: viewModel.cards)
                 .padding()
             
+            ScoreView(score: viewModel.score)
+            
             Divider()
             
             ThemePicker { theme in

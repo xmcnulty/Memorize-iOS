@@ -10,13 +10,15 @@ import XCTest
 
 final class MemorizeGameTests: XCTestCase {
     
+    typealias Game = MemorizeGame<String>
+    
     func testInitialCardCount() {
-        let game = MemorizeGame<String>(numPairOfCards: 3) { "🍎\($0)" }
+        let game = Game(numPairOfCards: 3) { "🍎\($0)" }
         XCTAssertEqual(game.cards.count, 6, "Should create 2 cards per pair")
     }
 
     func testShuffleChangesCardOrder() {
-        var game = MemorizeGame<String>(numPairOfCards: 2) { "🍎\($0)" }
+        var game = Game(numPairOfCards: 2) { "🍎\($0)" }
         let originalOrder = game.cards.map { $0.id }
         game.shuffle()
         
@@ -26,7 +28,7 @@ final class MemorizeGameTests: XCTestCase {
     }
     
     func testChooseMatchingCards() {
-        var game = MemorizeGame<String>(numPairOfCards: 2) { "🍎\($0)" }
+        var game = Game(numPairOfCards: 2) { "🍎\($0)" }
         game.shuffle()
         
         let firstIndex = game.cards.firstIndex {$0.content == "🍎0"}!
@@ -42,7 +44,7 @@ final class MemorizeGameTests: XCTestCase {
     }
     
     func testChooseNonMatchingCards() {
-        var game = MemorizeGame<String>(numPairOfCards: 2) { "🍎\($0)" }
+        var game = Game(numPairOfCards: 2) { "🍎\($0)" }
         
         let firstIndex = game.cards.firstIndex {$0.content == "🍎0"}!
         let secondIndex = game.cards.lastIndex {$0.content == "🍎1"}!
@@ -57,7 +59,7 @@ final class MemorizeGameTests: XCTestCase {
     }
     
     func testMatchingCardsStayMatched() {
-        var game = MemorizeGame<String>(numPairOfCards: 3) { "🍎\($0)" }
+        var game = Game(numPairOfCards: 3) { "🍎\($0)" }
 
         let match1 = game.cards.firstIndex { $0.content == "🍎0" }!
         let match2 = game.cards.lastIndex { $0.content == "🍎0" }!
@@ -79,7 +81,7 @@ final class MemorizeGameTests: XCTestCase {
     }
     
     func testThirdCardFlipResetsUnmatchedCards() {
-        var game = MemorizeGame<String>(numPairOfCards: 3) { "🍎\($0)" }
+        var game = Game(numPairOfCards: 3) { "🍎\($0)" }
         
         // Get three cards with different content
         let firstIndex = game.cards.firstIndex { $0.content == "🍎0" }!
@@ -105,7 +107,7 @@ final class MemorizeGameTests: XCTestCase {
     }
     
     func testChoosingAlreadyMatchedCardDoesNothing() {
-        var game = MemorizeGame<String>(numPairOfCards: 2) { "🍎\($0)" }
+        var game = Game(numPairOfCards: 2) { "🍎\($0)" }
         
         let firstMatchIndex = game.cards.firstIndex { $0.content == "🍎0" }!
         let secondMatchIndex = game.cards.lastIndex { $0.content == "🍎0" }!
@@ -128,7 +130,7 @@ final class MemorizeGameTests: XCTestCase {
     }
     
     func testChoosingAlreadyFaceUpCardDoesNothing() {
-        var game = MemorizeGame<String>(numPairOfCards: 2) { "🍎\($0)" }
+        var game = Game(numPairOfCards: 2) { "🍎\($0)" }
         
         let firstIndex = game.cards.firstIndex { $0.content == "🍎0" }!
         
@@ -144,5 +146,54 @@ final class MemorizeGameTests: XCTestCase {
         
         // Ensure state hasn’t changed
         XCTAssertEqual(game.cards, cardsBefore, "Choosing an already face-up card should have no effect.")
+    }
+    
+    func testInitialScoreIsZero() {
+        let game = Game(numPairOfCards: 2) { "🍎\($0)" }
+        XCTAssertEqual(game.score, 0, "Initial score should be zero.")
+    }
+    
+    func testScoreIncreasesOnMatch() {
+        var game = Game(numPairOfCards: 2) { i in
+            "\(i)"
+        }
+        
+        let firstCard = game.cards[0]
+        let matchingCard = game.cards[1]
+        
+        game.choose(firstCard)
+        game.choose(matchingCard)
+        
+        XCTAssertEqual(game.score, 2, "Score should increase by 2 on a match.")
+    }
+    
+    func testScoreDecreasesOnMismatchButNotBelowZero() {
+        var game = Game(numPairOfCards: 2) { ["A", "B"][$0] }
+        let first = game.cards[0] // "A"
+        let nonMatching = game.cards[2] // "B"
+        
+        game.choose(first)
+        game.choose(nonMatching)
+        
+        XCTAssertEqual(game.score, 0, "Score should not go below 0")
+    }
+    
+    func testScoreAccumulatesMultipleRounds() {
+        var game = Game(numPairOfCards: 3) { ["A", "B", "C"][$0] }
+
+        // First match (A)
+        game.choose(game.cards[0]) // A
+        game.choose(game.cards[1]) // A
+        XCTAssertEqual(game.score, 2)
+
+        // Mismatch (B vs C)
+        game.choose(game.cards[2]) // B
+        game.choose(game.cards[4]) // C
+        XCTAssertEqual(game.score, 1)
+
+        // Match (B)
+        game.choose(game.cards[3]) // B again
+        game.choose(game.cards[2]) // B
+        XCTAssertEqual(game.score, 3)
     }
 }
