@@ -24,13 +24,13 @@ final class MemorizeUITests: XCTestCase {
         XCTAssertTrue(card.waitForExistence(timeout: 1), "The card should exist")
 
         // B. Assert the card is initially face-down
-        XCTAssertEqual(card.label, "Face Down", "Card should start face-down")
+        XCTAssertEqual(card.label, "👻-0-face-down", "Card should start face-down")
 
         // C. Tap the card
         card.tap()
 
         // D. Assert the card is now face-up and showing its content
-        XCTAssertEqual(card.label, "Face Up", "Card should be face-up after tap")
+        XCTAssertEqual(card.label, "👻-0-face-up", "Card should be face-up after tap")
     }
     
     @MainActor
@@ -48,8 +48,8 @@ final class MemorizeUITests: XCTestCase {
         card2.tap()
 
         // Confirm both are face up
-        XCTAssertEqual(card1.label, "Face Up", "First card should be face up")
-        XCTAssertEqual(card2.label, "Face Up", "Second card should be face up")
+        XCTAssertEqual(card1.label, "👻-0-face-up", "First card should be face up")
+        XCTAssertEqual(card2.label, "🎃-0-face-up", "Second card should be face up")
 
         // Tap the third card to trigger flip back
         card3.tap()
@@ -58,10 +58,70 @@ final class MemorizeUITests: XCTestCase {
         sleep(1)
 
         // Assert first two are now face down
-        XCTAssertEqual(card1.label, "Face Down", "First card should be face down")
-        XCTAssertEqual(card2.label, "Face Down", "Second card should be face down")
+        XCTAssertEqual(card1.label, "👻-0-face-down", "First card should be face down")
+        XCTAssertEqual(card2.label, "🎃-0-face-down", "Second card should be face down")
 
         // Assert third card is face up
-        XCTAssertEqual(card3.label, "Face Up", "Third card should be face up")
+        XCTAssertEqual(card3.label, "🕷️-0-face-up", "Third card should be face up")
+    }
+    
+    @MainActor
+    func testSwitchToFlagsTheme() throws {
+        let halloweenCard = app.otherElements["card-👻-0"]
+        
+        let flagThemeButton = app.buttons["Flags-theme-button"]
+        
+        XCTAssertTrue(halloweenCard.waitForExistence(timeout: 1))
+        XCTAssertTrue(flagThemeButton.waitForExistence(timeout: 1))
+        
+        flagThemeButton.tap()
+        
+        XCTAssertFalse(halloweenCard.waitForExistence(timeout: 1))
+        
+        let flagCard = app.otherElements["card-🇦🇹-0"]
+        
+        XCTAssertTrue(flagCard.waitForExistence(timeout: 1))
+        
+        flagCard.tap()
+        
+        XCTAssertEqual(flagCard.label, "🇦🇹-0-face-up")
+    }
+    
+    @MainActor
+    func testSwitchToSportsTheme() throws {
+        let halloweenCard = app.otherElements["card-👻-0"]
+        
+        let sportsThemeButton = app.buttons["Sports-theme-button"]
+        
+        XCTAssertTrue(halloweenCard.waitForExistence(timeout: 1))
+        XCTAssertTrue(sportsThemeButton.waitForExistence(timeout: 1))
+        
+        sportsThemeButton.tap()
+        
+        XCTAssertFalse(halloweenCard.waitForExistence(timeout: 1))
+        
+        let sportsCard = app.otherElements["card-⚾️-0"]
+        
+        XCTAssertTrue(sportsCard.waitForExistence(timeout: 1))
+        
+        sportsCard.tap()
+        
+        XCTAssertEqual(sportsCard.label, "⚾️-0-face-up")
+    }
+    
+    @MainActor
+    func testTappingButtonOfCurrentThemeDoesNothing() throws {
+        let halloweenCard = app.otherElements["card-👻-0"]
+        
+        let halloweenThemeButton = app.buttons["Halloween-theme-button"]
+        
+        XCTAssertTrue(halloweenCard.waitForExistence(timeout: 1))
+        XCTAssertTrue(halloweenThemeButton.waitForExistence(timeout: 1))
+        
+        halloweenCard.tap()
+        halloweenThemeButton.tap()
+        
+        XCTAssertTrue(halloweenCard.waitForExistence(timeout: 1))
+        XCTAssertEqual(halloweenCard.label, "👻-0-face-up", "First card should be face up")
     }
 }

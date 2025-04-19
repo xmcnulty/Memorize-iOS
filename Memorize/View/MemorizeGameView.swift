@@ -15,12 +15,18 @@ struct MemorizeGameView: View {
     
     var body: some View {
         VStack {
+            Text("Memorize!")
+                .font(.title)
+                .bold()
+            
             cards
                 .animation(.default, value: viewModel.cards)
                 .padding()
             
-            Button("Shuffle") {
-                viewModel.shuffle()
+            Divider()
+            
+            ThemePicker { theme in
+                viewModel.changeTheme(to: theme)
             }
         }
     }
@@ -33,7 +39,7 @@ struct MemorizeGameView: View {
                     viewModel.choose(card)
                 }
         }
-        .foregroundColor(.orange)
+        .foregroundColor(viewModel.themeColor)
     }
 }
 

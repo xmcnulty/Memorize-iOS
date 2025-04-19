@@ -83,7 +83,7 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
         
         /// Debug-friendly string representing the card's state.
         var debugDescription: String {
-            "\(id): \(content) \(isFaceUp ? "UP" : "DOWN")"
+            "\(id)-face-\(isFaceUp ? "up" : "down")\(isMatched ? "-matched" : "")"
         }
     }
 }

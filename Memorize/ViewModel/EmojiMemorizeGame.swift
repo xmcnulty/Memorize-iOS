@@ -11,20 +11,34 @@ import SwiftUI
 ///
 /// This class manages the state of the game, connects the model to the UI, and exposes user intents such as choosing cards and shuffling.
 final class EmojiMemorizeGame: ObservableObject {
-    
-    /// The list of emoji symbols used as card content in the game.
-    private static let emojis = ["👻", "🎃", "🕷️", "😈", "💀", "🕸️", "🧙", "👹"]
+    private var theme: Theme
     
     /// The memory game model that contains the game logic.
     ///
     /// Initialized with 6 pairs of emoji cards.
-    @Published private var model = MemorizeGame<String>(numPairOfCards: 8) { index in
-        emojis[index]
-    }
+    @Published private var model: MemorizeGame<String>
     
     /// The cards currently in the game, exposed to the view.
     var cards: [MemorizeGame<String>.Card] {
         model.cards
+    }
+    
+    var themeColor: Color {
+        theme.color
+    }
+    
+    init(theme: Theme = .halloween) {
+        self.theme = theme
+        
+        model = EmojiMemorizeGame.createGame(with: theme)
+        
+        model.shuffle()
+    }
+    
+    private static func createGame(with theme: Theme) -> MemorizeGame<String> {
+        return MemorizeGame<String>(numPairOfCards: theme.emojis.count) { index in
+            theme.emojis[index]
+        }
     }
     
     // MARK: - Intents
@@ -40,4 +54,13 @@ final class EmojiMemorizeGame: ObservableObject {
     func choose(_ card: MemorizeGame<String>.Card) {
         model.choose(card)
     }
+    
+    func changeTheme(to newTheme: Theme) {
+        guard newTheme != theme else { return }
+        theme = newTheme
+        model = EmojiMemorizeGame.createGame(with: theme)
+        
+        model.shuffle()
+    }
+
 }
