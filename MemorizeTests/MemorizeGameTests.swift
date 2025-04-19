@@ -149,7 +149,7 @@ final class MemorizeGameTests: XCTestCase {
     }
     
     func testInitialScoreIsZero() {
-        var game = Game(numPairOfCards: 2) { "🍎\($0)" }
+        let game = Game(numPairOfCards: 2) { "🍎\($0)" }
         XCTAssertEqual(game.score, 0, "Initial score should be zero.")
     }
     

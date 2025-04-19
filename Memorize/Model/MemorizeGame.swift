@@ -36,7 +36,7 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
         for pairIndex in 0..<numPairOfCards {
             let content = cardContentFactory(pairIndex)
             cards.append(Card(content: content, id: "\(content)-0"))
-            cards.append(Card(content: content, id: "\(content)-1)"))
+            cards.append(Card(content: content, id: "\(content)-1"))
         }
         
         score = 0

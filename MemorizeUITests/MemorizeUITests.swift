@@ -124,4 +124,27 @@ final class MemorizeUITests: XCTestCase {
         XCTAssertTrue(halloweenCard.waitForExistence(timeout: 1))
         XCTAssertEqual(halloweenCard.label, "👻-0-face-up", "First card should be face up")
     }
+    
+    @MainActor
+    func testScoreUpdatesOnMatchAndMisMatch() throws {
+        XCTAssertTrue(app.staticTexts["Score: 0"].exists)
+        
+        // Match two cards and check score updates to 2 on UI
+        let card1 = app.otherElements["card-👻-0"]
+        let card2 = app.otherElements["card-👻-1"]
+        
+        card1.tap()
+        card2.tap()
+        
+        XCTAssertTrue(app.staticTexts["Score: 2"].exists)
+        
+        // Select two non matching cards and check score decrements by 1
+        let card3 = app.otherElements["card-🎃-0"]
+        let card4 = app.otherElements["card-🕷️-0"]
+        
+        card3.tap()
+        card4.tap()
+        
+        XCTAssertTrue(app.staticTexts["Score: 1"].exists)
+    }
 }
