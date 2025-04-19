@@ -13,6 +13,8 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
     /// The array of all cards in the game. Each pair of cards shares the same content.
     private(set) var cards: [Card]
     
+    private(set) var score: Int
+    
     /// The index of the currently face-up card, if exactly one card is face-up.
     /// Used to determine if a match should be checked.
     private var indexFirstChosenCard: Int? {
@@ -36,6 +38,8 @@ struct MemorizeGame<CardContent> where CardContent: Equatable {
             cards.append(Card(content: content, id: "\(content)-0"))
             cards.append(Card(content: content, id: "\(content)-1)"))
         }
+        
+        score = 0
     }
     
     /// Handles user intent to choose a card.
