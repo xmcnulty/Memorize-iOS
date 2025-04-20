@@ -9,6 +9,8 @@ import SwiftUI
 
 struct MemorizeGameView: View {
     
+    typealias Card = MemorizeGame<String>.Card
+    
     private static let aspectRatio: CGFloat = 2 / 3
     private static let spacing: CGFloat = 4
     
@@ -22,12 +24,12 @@ struct MemorizeGameView: View {
                 .font(.title)
                 .bold()
             
-            cards
-                .animation(.default, value: viewModel.cards)
+            cards 
                 .foregroundColor(viewModel.themeColor)
                 .padding()
             
             ScoreView(score: viewModel.score)
+                .animation(nil, value: viewModel.score)
             
             Divider()
             
@@ -41,10 +43,17 @@ struct MemorizeGameView: View {
         AspectVGrid(viewModel.cards, aspectRatio: cardAspectRatio) { card in
             CardView(card)
                 .padding(MemorizeGameView.spacing)
+                .overlay(FlyingNumber(number: scoreChanged(causedBy: card)))
                 .onTapGesture {
-                    viewModel.choose(card)
+                    withAnimation(.easeIn(duration: 0.5)) {
+                        viewModel.choose(card)
+                    }
                 }
         }
+    }
+    
+    private func scoreChanged(causedBy card: Card) -> Int {
+        return 0
     }
 }
 

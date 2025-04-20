@@ -32,6 +32,8 @@ struct CardView: View {
                     .multilineTextAlignment(.center)
                     .aspectRatio(1, contentMode: .fit)
                     .padding(Constants.Pie.inset)
+                    .rotationEffect(.degrees(card.isMatched ? 360 : 0))
+                    .animation(.easeInOut(duration: 1), value: card.isMatched)
             }
             .padding(Constants.inset)
             .cardify(isFaceUp: card.isFaceUp)
@@ -56,11 +58,5 @@ struct CardView: View {
             static let opacity: CGFloat = 0.4
             static let inset: CGFloat = 5
         }
-    }
-}
-
-extension View {
-    func cardify(isFaceUp: Bool) -> some View {
-        modifier(Cardify(isFaceUp: isFaceUp))
     }
 }
