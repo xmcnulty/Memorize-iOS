@@ -24,6 +24,7 @@ struct MemorizeGameView: View {
             
             cards
                 .animation(.default, value: viewModel.cards)
+                .foregroundColor(viewModel.themeColor)
                 .padding()
             
             ScoreView(score: viewModel.score)
@@ -44,7 +45,6 @@ struct MemorizeGameView: View {
                     viewModel.choose(card)
                 }
         }
-        .foregroundColor(viewModel.themeColor)
     }
 }
 
